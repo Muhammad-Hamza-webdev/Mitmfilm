@@ -19,13 +19,33 @@
         align-items: center;
       }
       .mobile-card {
-        background-image: url("mobile.png");
+        overflow: hidden;
         width: 20%;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: contain;
         cursor: pointer;
+        border-radius: 30px;
+        position: relative;
         transition: transform 0.3s ease, opacity 0.3s ease;
+        &::before {
+          z-index: 3;
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-image: url("mobile.png");
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: contain;
+        }
+      }
+
+      .mobile-card-video {
+        /* width: 100%; */
+        left: 20px;
+        right: 100px;
+        top: 20px;
+        bottom: 20px;
+        /* object-fit: cover; */
+        border-radius: 30px;
+        position: absolute;
       }
 
       .mobile-card.inactive-card {
@@ -150,7 +170,10 @@
           <div class="mobile-card inactive-card" data-index="0"><h1>0</h1></div>
           <div class="mobile-card inactive-card" data-index="1"><h1>1</h1></div>
           <div class="mobile-card main-card active" data-index="2">
-            <h1>2</h1>
+            <video class="mobile-card-video" controls>
+              <source src="bro-in.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
           <div class="mobile-card inactive-card" data-index="3"><h1>3</h1></div>
           <div class="mobile-card inactive-card" data-index="4"><h1>4</h1></div>
