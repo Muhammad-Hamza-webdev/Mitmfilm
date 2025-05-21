@@ -87,6 +87,31 @@
       .mobile-card.animate-out {
         animation: fadeOutDown 0.3s ease;
       }
+
+      /* Media Queries */
+      @media (max-width: 850px) {
+        .mobile-card {
+          width: 30%;
+        }
+        .main-card {
+          height: 400px;
+        }
+        .inactive-card {
+          height: 400px;
+        }
+      }
+
+      @media (max-width: 550px) {
+        .mobile-card {
+          width: 80%;
+        }
+        .main-card {
+          height: 480px;
+        }
+        .inactive-card {
+          height: 480px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -174,12 +199,35 @@
       const allCards = Array.from(document.querySelectorAll(".mobile-card"));
       const container = document.querySelector(".inner-video");
 
-      const VISIBLE_CARDS = 5;
-      const CENTER_POSITION = Math.floor(VISIBLE_CARDS / 2);
+      // Get the number of visible cards based on screen size
+      function getVisibleCardsCount() {
+        if (window.matchMedia("(max-width: 550px)").matches) {
+          return 1;
+        } else if (window.matchMedia("(max-width: 850px)").matches) {
+          return 3;
+        } else {
+          return 5;
+        }
+      }
+
+      let visibleCards = getVisibleCardsCount();
+      let centerPosition = Math.floor(visibleCards / 2);
       let activeIndex = 2;
 
+      // Initialize carousel
       updateCarousel();
 
+      // Update on window resize
+      window.addEventListener("resize", function () {
+        const newVisibleCards = getVisibleCardsCount();
+        if (newVisibleCards !== visibleCards) {
+          visibleCards = newVisibleCards;
+          centerPosition = Math.floor(visibleCards / 2);
+          updateCarousel();
+        }
+      });
+
+      // Event listeners
       prevBtn.addEventListener("click", () => navigate(-1));
       nextBtn.addEventListener("click", () => navigate(1));
       allCards.forEach((card) =>
@@ -220,7 +268,7 @@
 
         // Determine which cards to show
         const visibleIndices = [];
-        for (let i = -CENTER_POSITION; i <= CENTER_POSITION; i++) {
+        for (let i = -centerPosition; i <= centerPosition; i++) {
           let index = (activeIndex + i + allCards.length) % allCards.length;
           visibleIndices.push(index);
         }
@@ -231,7 +279,7 @@
           card.classList.remove("hidden", "animate-out");
           card.classList.add("animate-in");
 
-          if (position === CENTER_POSITION) {
+          if (position === centerPosition) {
             card.classList.add("active", "main-card");
             card.classList.remove("inactive-card");
           }
