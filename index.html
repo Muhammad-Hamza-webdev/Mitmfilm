@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mitmfilm</title>
+    <style>
+      .video-main {
+        display: flex;
+        justify-content: center;
+      }
+      .container {
+        width: 95%;
+        max-width: 1920px;
+      }
+      .inner-video {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
+      .mobile-card {
+        background-image: url("mobile.png");
+        width: 20%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        cursor: pointer;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+
+      .mobile-card.inactive-card {
+        opacity: 0.7;
+        transform: scale(0.9);
+      }
+      .mobile-card.active {
+        opacity: 1;
+        transform: scale(1);
+      }
+      .main-card {
+        height: 620px;
+      }
+      .inactive-card {
+        height: 580px;
+      }
+
+      .prev-btn,
+      .next-btn {
+        cursor: pointer;
+      }
+      .prev-btn svg {
+        width: 40px;
+        height: 40px;
+      }
+      .next-btn svg {
+        width: 40px;
+        height: 40px;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="video-main">
+      <div class="container">
+        <div class="inner-video">
+          <!-- previous button -->
+          <div class="prev-btn">
+            <svg
+              id="Previous-Filled--Streamline-Carbon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              height="16"
+              width="16"
+            >
+              <path
+                d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm4 7.5H5.925l2.79 2.7864L8 12l-4 -4 4 -4 0.715 0.6963L5.925 7.5H12Z"
+                fill="#000000"
+                stroke-width="0.5"
+              ></path>
+              <path
+                id="inner-path"
+                d="m8 4 0.715 0.6965L5.925 7.5 12 7.5l0 1 -6.075 0 2.79 2.7865L8 12l-4 -4 4 -4z"
+                fill="none"
+                stroke-width="0.5"
+              ></path>
+              <path
+                id="_Transparent_Rectangle_"
+                d="M0 0h16v16H0Z"
+                fill="none"
+                stroke-width="0.5"
+              ></path>
+            </svg>
+          </div>
+          <!-- mobile card one -->
+          <div class="mobile-card inactive-card" data-index="0">
+            <h1>0</h1>
+          </div>
+          <!-- mobile card one -->
+          <div class="mobile-card inactive-card" data-index="1">
+            <h1>1</h1>
+          </div>
+          <!-- mobile card one -->
+          <div class="mobile-card main-card active" data-index="2">
+            <h1>2</h1>
+          </div>
+          <!-- mobile card one -->
+          <div class="mobile-card inactive-card" data-index="3">
+            <h1>3</h1>
+          </div>
+          <!-- mobile card one -->
+          <div class="mobile-card inactive-card" data-index="4">
+            <h1>4</h1>
+          </div>
+          <!-- mobile card one -->
+          <div class="mobile-card inactive-card hidden" data-index="5">
+            <h1>5</h1>
+          </div>
+          <!-- mobile card one -->
+          <div class="mobile-card inactive-card hidden" data-index="6">
+            <h1>6</h1>
+          </div>
+          <!-- next button -->
+          <div class="next-btn">
+            <svg
+              id="Next-Filled--Streamline-Carbon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              height="16"
+              width="16"
+            >
+              <path
+                d="M1 8A7 7 0 1 0 8 1 7 7 0 0 0 1 8Zm3 -0.5h6.075l-2.79 -2.8037L8 4l4 4 -4 4 -0.715 -0.7136L10.075 8.5H4Z"
+                fill="#000000"
+                stroke-width="0.5"
+              ></path>
+              <path
+                id="inner-path"
+                d="m8 4 -0.715 0.6965L10.075 7.5 4 7.5l0 1 6.075 0 -2.79 2.7865L8 12l4 -4 -4 -4z"
+                fill="none"
+                stroke-width="0.5"
+              ></path>
+              <path
+                id="_Transparent_Rectangle_"
+                d="M0 0h16v16H0Z"
+                fill="none"
+                stroke-width="0.5"
+              ></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Cache DOM elements
+      const prevBtn = document.querySelector(".prev-btn");
+      const nextBtn = document.querySelector(".next-btn");
+      const allCards = Array.from(document.querySelectorAll(".mobile-card"));
+      const container = document.querySelector(".inner-video");
+
+      // Config
+      const VISIBLE_CARDS = 5; // Always show exactly 5 cards
+      const CENTER_POSITION = Math.floor(VISIBLE_CARDS / 2); // Index of the center card
+
+      // Initialize
+      let activeIndex = 2; // Start with card at index 2 active
+      updateCarousel();
+
+      // Event Listeners
+      prevBtn.addEventListener("click", () => navigate(-1));
+      nextBtn.addEventListener("click", () => navigate(1));
+      allCards.forEach((card) =>
+        card.addEventListener("click", handleCardClick)
+      );
+
+      // Navigation functions
+      function navigate(direction) {
+        activeIndex =
+          (activeIndex + direction + allCards.length) % allCards.length;
+        updateCarousel();
+      }
+
+      function handleCardClick(e) {
+        if (e.currentTarget.classList.contains("inactive-card")) {
+          activeIndex = parseInt(e.currentTarget.dataset.index);
+          updateCarousel();
+        }
+      }
+
+      // Core carousel logic
+      function updateCarousel() {
+        // Hide all cards first (optimized with CSS class toggle)
+        allCards.forEach((card) => {
+          card.classList.add("hidden");
+          card.classList.remove("active", "main-card");
+          card.classList.add("inactive-card");
+        });
+
+        // Calculate which cards to show
+        const visibleIndices = [];
+        for (let i = -CENTER_POSITION; i <= CENTER_POSITION; i++) {
+          let index = (activeIndex + i + allCards.length) % allCards.length;
+          visibleIndices.push(index);
+        }
+
+        // Update visible cards
+        visibleIndices.forEach((index, position) => {
+          const card = allCards[index];
+          card.classList.remove("hidden");
+
+          if (position === CENTER_POSITION) {
+            card.classList.add("active", "main-card");
+            card.classList.remove("inactive-card");
+          }
+        });
+
+        // Reorder DOM (optimized single reflow)
+        const fragment = document.createDocumentFragment();
+        fragment.appendChild(prevBtn);
+        visibleIndices.forEach((index) =>
+          fragment.appendChild(allCards[index])
+        );
+        fragment.appendChild(nextBtn);
+        container.innerHTML = "";
+        container.appendChild(fragment);
+      }
+    });
+  </script>
+</html>
