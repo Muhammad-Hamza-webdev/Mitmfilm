@@ -47,16 +47,45 @@
       .next-btn {
         cursor: pointer;
       }
-      .prev-btn svg {
-        width: 40px;
-        height: 40px;
-      }
+      .prev-btn svg,
       .next-btn svg {
         width: 40px;
         height: 40px;
       }
+
       .hidden {
         display: none;
+      }
+
+      /* Animation styles */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes fadeOutDown {
+        from {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+        to {
+          opacity: 0;
+          transform: translateY(30px) scale(0.95);
+        }
+      }
+
+      .mobile-card.animate-in {
+        animation: fadeInUp 0.4s ease;
+      }
+
+      .mobile-card.animate-out {
+        animation: fadeOutDown 0.3s ease;
       }
     </style>
   </head>
@@ -92,31 +121,17 @@
               ></path>
             </svg>
           </div>
-          <!-- mobile card one -->
-          <div class="mobile-card inactive-card" data-index="0">
-            <h1>0</h1>
-          </div>
-          <!-- mobile card one -->
-          <div class="mobile-card inactive-card" data-index="1">
-            <h1>1</h1>
-          </div>
-          <!-- mobile card one -->
+          <!-- mobile cards -->
+          <div class="mobile-card inactive-card" data-index="0"><h1>0</h1></div>
+          <div class="mobile-card inactive-card" data-index="1"><h1>1</h1></div>
           <div class="mobile-card main-card active" data-index="2">
             <h1>2</h1>
           </div>
-          <!-- mobile card one -->
-          <div class="mobile-card inactive-card" data-index="3">
-            <h1>3</h1>
-          </div>
-          <!-- mobile card one -->
-          <div class="mobile-card inactive-card" data-index="4">
-            <h1>4</h1>
-          </div>
-          <!-- mobile card one -->
+          <div class="mobile-card inactive-card" data-index="3"><h1>3</h1></div>
+          <div class="mobile-card inactive-card" data-index="4"><h1>4</h1></div>
           <div class="mobile-card inactive-card hidden" data-index="5">
             <h1>5</h1>
           </div>
-          <!-- mobile card one -->
           <div class="mobile-card inactive-card hidden" data-index="6">
             <h1>6</h1>
           </div>
@@ -154,28 +169,23 @@
   </body>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Cache DOM elements
       const prevBtn = document.querySelector(".prev-btn");
       const nextBtn = document.querySelector(".next-btn");
       const allCards = Array.from(document.querySelectorAll(".mobile-card"));
       const container = document.querySelector(".inner-video");
 
-      // Config
-      const VISIBLE_CARDS = 5; // Always show exactly 5 cards
-      const CENTER_POSITION = Math.floor(VISIBLE_CARDS / 2); // Index of the center card
+      const VISIBLE_CARDS = 5;
+      const CENTER_POSITION = Math.floor(VISIBLE_CARDS / 2);
+      let activeIndex = 2;
 
-      // Initialize
-      let activeIndex = 2; // Start with card at index 2 active
       updateCarousel();
 
-      // Event Listeners
       prevBtn.addEventListener("click", () => navigate(-1));
       nextBtn.addEventListener("click", () => navigate(1));
       allCards.forEach((card) =>
         card.addEventListener("click", handleCardClick)
       );
 
-      // Navigation functions
       function navigate(direction) {
         activeIndex =
           (activeIndex + direction + allCards.length) % allCards.length;
@@ -189,26 +199,37 @@
         }
       }
 
-      // Core carousel logic
       function updateCarousel() {
-        // Hide all cards first (optimized with CSS class toggle)
+        // Animate all currently visible cards out
+        allCards.forEach((card) => {
+          if (!card.classList.contains("hidden")) {
+            card.classList.remove("animate-in");
+            card.classList.add("animate-out");
+          }
+        });
+
+        // Force reflow to reset animation
+        void container.offsetWidth;
+
+        // Reset all cards
         allCards.forEach((card) => {
           card.classList.add("hidden");
           card.classList.remove("active", "main-card");
           card.classList.add("inactive-card");
         });
 
-        // Calculate which cards to show
+        // Determine which cards to show
         const visibleIndices = [];
         for (let i = -CENTER_POSITION; i <= CENTER_POSITION; i++) {
           let index = (activeIndex + i + allCards.length) % allCards.length;
           visibleIndices.push(index);
         }
 
-        // Update visible cards
+        // Animate in new visible cards
         visibleIndices.forEach((index, position) => {
           const card = allCards[index];
-          card.classList.remove("hidden");
+          card.classList.remove("hidden", "animate-out");
+          card.classList.add("animate-in");
 
           if (position === CENTER_POSITION) {
             card.classList.add("active", "main-card");
@@ -216,7 +237,7 @@
           }
         });
 
-        // Reorder DOM (optimized single reflow)
+        // Reorder DOM
         const fragment = document.createDocumentFragment();
         fragment.appendChild(prevBtn);
         visibleIndices.forEach((index) =>
@@ -225,6 +246,13 @@
         fragment.appendChild(nextBtn);
         container.innerHTML = "";
         container.appendChild(fragment);
+
+        // Remove animation classes after animation ends
+        allCards.forEach((card) => {
+          card.addEventListener("animationend", () => {
+            card.classList.remove("animate-in", "animate-out");
+          });
+        });
       }
     });
   </script>
