@@ -71,6 +71,24 @@
         display: none;
       }
 
+      .play-btn {
+        position: absolute;
+        z-index: 5;
+        left: 33%;
+        top: 41%;
+      }
+      .pause-btn {
+        position: absolute;
+        z-index: 4;
+        left: 33%;
+        top: 41%;
+      }
+      .play-btn svg,
+      .pause-btn svg {
+        width: 100px;
+        height: 100px;
+      }
+
       /* Animation styles */
       @keyframes fadeInUp {
         from {
@@ -104,6 +122,9 @@
 
       /* Media Queries */
       @media (max-width: 850px) {
+        .mobile-card-video {
+          border-radius: 39px;
+        }
         .mobile-card {
           width: 30%;
         }
@@ -113,9 +134,33 @@
         .inactive-card {
           height: 400px;
         }
+
+        .play-btn {
+          position: absolute;
+          z-index: 5;
+          left: 30%;
+          top: 39%;
+        }
+        .pause-btn {
+          position: absolute;
+          z-index: 4;
+          left: 30%;
+          top: 39%;
+        }
+        .play-btn svg,
+        .pause-btn svg {
+          width: 80px;
+          height: 80px;
+        }
       }
 
       @media (max-width: 550px) {
+        .mobile-card-video {
+          width: 91%;
+          left: 11px;
+          height: 98%;
+          top: 5px;
+        }
         .mobile-card {
           width: 80%;
         }
@@ -124,6 +169,12 @@
         }
         .inactive-card {
           height: 480px;
+        }
+        .play-btn {
+          left: 33%;
+        }
+        .pause-btn {
+          left: 33%;
         }
       }
     </style>
@@ -139,40 +190,188 @@
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               height="16"
-              width="16">
+              width="16"
+            >
               <path
                 d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm4 7.5H5.925l2.79 2.7864L8 12l-4 -4 4 -4 0.715 0.6963L5.925 7.5H12Z"
                 fill="#000000"
-                stroke-width="0.5"></path>
+                stroke-width="0.5"
+              ></path>
               <path
                 id="inner-path"
                 d="m8 4 0.715 0.6965L5.925 7.5 12 7.5l0 1 -6.075 0 2.79 2.7865L8 12l-4 -4 4 -4z"
                 fill="none"
-                stroke-width="0.5"></path>
+                stroke-width="0.5"
+              ></path>
               <path
                 id="_Transparent_Rectangle_"
                 d="M0 0h16v16H0Z"
                 fill="none"
-                stroke-width="0.5"></path>
+                stroke-width="0.5"
+              ></path>
             </svg>
           </div>
           <!-- mobile cards -->
           <div class="mobile-card inactive-card" data-index="0">
+            <div class="play-btn hidden">
+              <svg
+                id="Play-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  id="_inner-path_"
+                  d="M5.5 11.5a0.5 0.5 0 0 1 -0.5 -0.5V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945l-6 3A0.5005 0.5005 0 0 1 5.5 11.5Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm3.72365 7.44725 -6 3A0.5 0.5 0 0 1 5 11V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
+            <div class="pause-btn hidden">
+              <svg
+                id="Pause-Outline-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm-1 10h-1V5h1Zm3 0h-1V5h1Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
             <!--  -->
-            <!-- <video class="mobile-card-video">
+            <video class="mobile-card-video">
               <source src="bro-in.mp4" type="video/mp4" />
               Your browser does not support the video tag.
-            </video> -->
+            </video>
           </div>
           <!--  -->
           <div class="mobile-card inactive-card" data-index="1">
-            <!-- <video class="mobile-card-video">
+            <div class="play-btn hidden">
+              <svg
+                id="Play-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  id="_inner-path_"
+                  d="M5.5 11.5a0.5 0.5 0 0 1 -0.5 -0.5V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945l-6 3A0.5005 0.5005 0 0 1 5.5 11.5Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm3.72365 7.44725 -6 3A0.5 0.5 0 0 1 5 11V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
+            <div class="pause-btn hidden">
+              <svg
+                id="Pause-Outline-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm-1 10h-1V5h1Zm3 0h-1V5h1Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
+            <video class="mobile-card-video">
               <source src="bro-in.mp4" type="video/mp4" />
               Your browser does not support the video tag.
-            </video> -->
+            </video>
           </div>
           <!--  -->
           <div class="mobile-card main-card active" data-index="2">
+            <div class="play-btn">
+              <svg
+                id="Play-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  id="_inner-path_"
+                  d="M5.5 11.5a0.5 0.5 0 0 1 -0.5 -0.5V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945l-6 3A0.5005 0.5005 0 0 1 5.5 11.5Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm3.72365 7.44725 -6 3A0.5 0.5 0 0 1 5 11V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
+            <div class="pause-btn hidden">
+              <svg
+                id="Pause-Outline-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm-1 10h-1V5h1Zm3 0h-1V5h1Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
             <video class="mobile-card-video">
               <source src="bro-in.mp4" type="video/mp4" />
               Your browser does not support the video tag.
@@ -180,31 +379,223 @@
           </div>
           <!--  -->
           <div class="mobile-card inactive-card" data-index="3">
-            <!-- <video class="mobile-card-video">
+            <div class="play-btn hidden">
+              <svg
+                id="Play-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  id="_inner-path_"
+                  d="M5.5 11.5a0.5 0.5 0 0 1 -0.5 -0.5V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945l-6 3A0.5005 0.5005 0 0 1 5.5 11.5Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm3.72365 7.44725 -6 3A0.5 0.5 0 0 1 5 11V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
+            <div class="pause-btn hidden">
+              <svg
+                id="Pause-Outline-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm-1 10h-1V5h1Zm3 0h-1V5h1Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
+            <video class="mobile-card-video">
               <source src="bro-in.mp4" type="video/mp4" />
               Your browser does not support the video tag.
-            </video> -->
+            </video>
           </div>
           <!--  -->
           <div class="mobile-card inactive-card" data-index="4">
-            <!-- <video class="mobile-card-video">
+            <div class="play-btn hidden">
+              <svg
+                id="Play-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  id="_inner-path_"
+                  d="M5.5 11.5a0.5 0.5 0 0 1 -0.5 -0.5V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945l-6 3A0.5005 0.5005 0 0 1 5.5 11.5Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm3.72365 7.44725 -6 3A0.5 0.5 0 0 1 5 11V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
+            <div class="pause-btn hidden">
+              <svg
+                id="Pause-Outline-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm-1 10h-1V5h1Zm3 0h-1V5h1Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
+            <video class="mobile-card-video">
               <source src="bro-in.mp4" type="video/mp4" />
               Your browser does not support the video tag.
-            </video> -->
+            </video>
           </div>
           <!--  -->
           <div class="mobile-card inactive-card hidden" data-index="5">
-            <!-- <video class="mobile-card-video">
+            <div class="play-btn hidden">
+              <svg
+                id="Play-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  id="_inner-path_"
+                  d="M5.5 11.5a0.5 0.5 0 0 1 -0.5 -0.5V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945l-6 3A0.5005 0.5005 0 0 1 5.5 11.5Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm3.72365 7.44725 -6 3A0.5 0.5 0 0 1 5 11V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
+            <div class="pause-btn hidden">
+              <svg
+                id="Pause-Outline-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm-1 10h-1V5h1Zm3 0h-1V5h1Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
+            <video class="mobile-card-video">
               <source src="bro-in.mp4" type="video/mp4" />
               Your browser does not support the video tag.
-            </video> -->
+            </video>
           </div>
           <div class="mobile-card inactive-card hidden" data-index="6">
+            <div class="play-btn hidden">
+              <svg
+                id="Play-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  id="_inner-path_"
+                  d="M5.5 11.5a0.5 0.5 0 0 1 -0.5 -0.5V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945l-6 3A0.5005 0.5005 0 0 1 5.5 11.5Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm3.72365 7.44725 -6 3A0.5 0.5 0 0 1 5 11V5a0.5 0.5 0 0 1 0.72365 -0.44725l6 3a0.5 0.5 0 0 1 0 0.8945Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
+            <div class="pause-btn hidden">
+              <svg
+                id="Pause-Outline-Filled--Streamline-Carbon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                height="16"
+                width="16"
+              >
+                <path
+                  d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm-1 10h-1V5h1Zm3 0h-1V5h1Z"
+                  fill="#ffffff85"
+                  stroke-width="0.5"
+                ></path>
+                <path
+                  id="_Transparent_Rectangle_"
+                  d="M0 0h16v16H0Z"
+                  fill="none"
+                  stroke-width="0.5"
+                ></path>
+              </svg>
+            </div>
             <!--  -->
-            <!-- <video class="mobile-card-video">
+            <video class="mobile-card-video">
               <source src="bro-in.mp4" type="video/mp4" />
               Your browser does not support the video tag.
-            </video> -->
+            </video>
           </div>
           <!-- next button -->
           <div class="next-btn">
@@ -213,21 +604,25 @@
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               height="16"
-              width="16">
+              width="16"
+            >
               <path
                 d="M1 8A7 7 0 1 0 8 1 7 7 0 0 0 1 8Zm3 -0.5h6.075l-2.79 -2.8037L8 4l4 4 -4 4 -0.715 -0.7136L10.075 8.5H4Z"
                 fill="#000000"
-                stroke-width="0.5"></path>
+                stroke-width="0.5"
+              ></path>
               <path
                 id="inner-path"
                 d="m8 4 -0.715 0.6965L10.075 7.5 4 7.5l0 1 6.075 0 -2.79 2.7865L8 12l4 -4 -4 -4z"
                 fill="none"
-                stroke-width="0.5"></path>
+                stroke-width="0.5"
+              ></path>
               <path
                 id="_Transparent_Rectangle_"
                 d="M0 0h16v16H0Z"
                 fill="none"
-                stroke-width="0.5"></path>
+                stroke-width="0.5"
+              ></path>
             </svg>
           </div>
         </div>
@@ -277,6 +672,13 @@
       );
 
       function navigate(direction) {
+        // Pause any currently playing video
+        const activeVideo =
+          allCards[activeIndex].querySelector(".mobile-card-video");
+        if (activeVideo) {
+          activeVideo.pause();
+        }
+
         activeIndex =
           (activeIndex + direction + allCards.length) % allCards.length;
         updateCarousel();
@@ -284,8 +686,46 @@
 
       function handleCardClick(e) {
         if (e.currentTarget.classList.contains("inactive-card")) {
+          // Pause any currently playing video
+          const activeVideo =
+            allCards[activeIndex].querySelector(".mobile-card-video");
+          if (activeVideo) {
+            activeVideo.pause();
+          }
+
           activeIndex = parseInt(e.currentTarget.dataset.index);
           updateCarousel();
+
+          // Automatically play the video when card becomes active
+          setTimeout(() => {
+            const newActiveCard = allCards[activeIndex];
+            const video = newActiveCard.querySelector(".mobile-card-video");
+            const playBtn = newActiveCard.querySelector(".play-btn");
+            const pauseBtn = newActiveCard.querySelector(".pause-btn");
+
+            if (video) {
+              video.play();
+              playBtn.classList.add("hidden");
+              pauseBtn.classList.remove("hidden");
+            }
+          }, 400); // Wait for animation to complete
+        } else if (e.currentTarget.classList.contains("active")) {
+          // Handle play/pause on active card
+          const video = e.currentTarget.querySelector(".mobile-card-video");
+          const playBtn = e.currentTarget.querySelector(".play-btn");
+          const pauseBtn = e.currentTarget.querySelector(".pause-btn");
+
+          if (video.paused) {
+            // Play video
+            video.play();
+            playBtn.classList.add("hidden");
+            pauseBtn.classList.remove("hidden");
+          } else {
+            // Pause video
+            video.pause();
+            playBtn.classList.remove("hidden");
+            pauseBtn.classList.add("hidden");
+          }
         }
       }
 
@@ -306,6 +746,19 @@
           card.classList.add("hidden");
           card.classList.remove("active", "main-card");
           card.classList.add("inactive-card");
+
+          // Hide all play/pause buttons
+          const playBtn = card.querySelector(".play-btn");
+          const pauseBtn = card.querySelector(".pause-btn");
+          if (playBtn) playBtn.classList.add("hidden");
+          if (pauseBtn) pauseBtn.classList.add("hidden");
+
+          // Pause all videos when changing cards
+          const video = card.querySelector(".mobile-card-video");
+          if (video) {
+            video.pause();
+            video.currentTime = 0;
+          }
         });
 
         // Determine which cards to show
@@ -324,6 +777,12 @@
           if (position === centerPosition) {
             card.classList.add("active", "main-card");
             card.classList.remove("inactive-card");
+
+            // Show play button for active card
+            const playBtn = card.querySelector(".play-btn");
+            const pauseBtn = card.querySelector(".pause-btn");
+            if (playBtn) playBtn.classList.remove("hidden");
+            if (pauseBtn) pauseBtn.classList.add("hidden");
           }
         });
 
