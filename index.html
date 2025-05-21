@@ -21,6 +21,7 @@
       .mobile-card {
         overflow: hidden;
         width: 20%;
+        aspect-ratio: 1/2;
         cursor: pointer;
         border-radius: 30px;
         position: relative;
@@ -38,13 +39,12 @@
       }
 
       .mobile-card-video {
-        /* width: 100%; */
-        left: 20px;
-        right: 100px;
-        top: 20px;
-        bottom: 20px;
-        /* object-fit: cover; */
-        border-radius: 30px;
+        width: 94%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50px;
+        left: 5px;
+        right: 0px;
         position: absolute;
       }
 
@@ -55,12 +55,6 @@
       .mobile-card.active {
         opacity: 1;
         transform: scale(1);
-      }
-      .main-card {
-        height: 620px;
-      }
-      .inactive-card {
-        height: 580px;
       }
 
       .prev-btn,
@@ -145,43 +139,72 @@
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               height="16"
-              width="16"
-            >
+              width="16">
               <path
                 d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1Zm4 7.5H5.925l2.79 2.7864L8 12l-4 -4 4 -4 0.715 0.6963L5.925 7.5H12Z"
                 fill="#000000"
-                stroke-width="0.5"
-              ></path>
+                stroke-width="0.5"></path>
               <path
                 id="inner-path"
                 d="m8 4 0.715 0.6965L5.925 7.5 12 7.5l0 1 -6.075 0 2.79 2.7865L8 12l-4 -4 4 -4z"
                 fill="none"
-                stroke-width="0.5"
-              ></path>
+                stroke-width="0.5"></path>
               <path
                 id="_Transparent_Rectangle_"
                 d="M0 0h16v16H0Z"
                 fill="none"
-                stroke-width="0.5"
-              ></path>
+                stroke-width="0.5"></path>
             </svg>
           </div>
           <!-- mobile cards -->
-          <div class="mobile-card inactive-card" data-index="0"><h1>0</h1></div>
-          <div class="mobile-card inactive-card" data-index="1"><h1>1</h1></div>
+          <div class="mobile-card inactive-card" data-index="0">
+            <!--  -->
+            <!-- <video class="mobile-card-video">
+              <source src="bro-in.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video> -->
+          </div>
+          <!--  -->
+          <div class="mobile-card inactive-card" data-index="1">
+            <!-- <video class="mobile-card-video">
+              <source src="bro-in.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video> -->
+          </div>
+          <!--  -->
           <div class="mobile-card main-card active" data-index="2">
-            <video class="mobile-card-video" controls>
+            <video class="mobile-card-video">
               <source src="bro-in.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
-          <div class="mobile-card inactive-card" data-index="3"><h1>3</h1></div>
-          <div class="mobile-card inactive-card" data-index="4"><h1>4</h1></div>
+          <!--  -->
+          <div class="mobile-card inactive-card" data-index="3">
+            <!-- <video class="mobile-card-video">
+              <source src="bro-in.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video> -->
+          </div>
+          <!--  -->
+          <div class="mobile-card inactive-card" data-index="4">
+            <!-- <video class="mobile-card-video">
+              <source src="bro-in.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video> -->
+          </div>
+          <!--  -->
           <div class="mobile-card inactive-card hidden" data-index="5">
-            <h1>5</h1>
+            <!-- <video class="mobile-card-video">
+              <source src="bro-in.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video> -->
           </div>
           <div class="mobile-card inactive-card hidden" data-index="6">
-            <h1>6</h1>
+            <!--  -->
+            <!-- <video class="mobile-card-video">
+              <source src="bro-in.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video> -->
           </div>
           <!-- next button -->
           <div class="next-btn">
@@ -190,25 +213,21 @@
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               height="16"
-              width="16"
-            >
+              width="16">
               <path
                 d="M1 8A7 7 0 1 0 8 1 7 7 0 0 0 1 8Zm3 -0.5h6.075l-2.79 -2.8037L8 4l4 4 -4 4 -0.715 -0.7136L10.075 8.5H4Z"
                 fill="#000000"
-                stroke-width="0.5"
-              ></path>
+                stroke-width="0.5"></path>
               <path
                 id="inner-path"
                 d="m8 4 -0.715 0.6965L10.075 7.5 4 7.5l0 1 6.075 0 -2.79 2.7865L8 12l4 -4 -4 -4z"
                 fill="none"
-                stroke-width="0.5"
-              ></path>
+                stroke-width="0.5"></path>
               <path
                 id="_Transparent_Rectangle_"
                 d="M0 0h16v16H0Z"
                 fill="none"
-                stroke-width="0.5"
-              ></path>
+                stroke-width="0.5"></path>
             </svg>
           </div>
         </div>
