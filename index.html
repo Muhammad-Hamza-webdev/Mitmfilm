@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mitmfilm</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
     <style>
       .video-main {
         display: flex;
@@ -82,42 +84,19 @@
         z-index: 4;
         left: 33%;
         top: 41%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+
+      .mobile-card:hover .pause-btn {
+        opacity: 1;
+        pointer-events: auto;
       }
       .play-btn svg,
       .pause-btn svg {
         width: 100px;
         height: 100px;
-      }
-
-      /* Animation styles */
-      /* @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px) scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
-
-      @keyframes fadeOutDown {
-        from {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-        to {
-          opacity: 0;
-          transform: translateY(30px) scale(0.95);
-        }
-      } */
-
-      .mobile-card.animate-in {
-        animation: fadeInUp 0.4s ease;
-      }
-
-      .mobile-card.animate-out {
-        animation: fadeOutDown 0.3s ease;
       }
 
       /* Media Queries */
@@ -629,64 +608,71 @@
         </div>
       </div>
     </div>
-  </body>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const prevBtn = document.querySelector(".prev-btn");
-      const nextBtn = document.querySelector(".next-btn");
-      const allCards = Array.from(document.querySelectorAll(".mobile-card"));
-      const container = document.querySelector(".inner-video");
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const prevBtn = document.querySelector(".prev-btn");
+        const nextBtn = document.querySelector(".next-btn");
+        const allCards = Array.from(document.querySelectorAll(".mobile-card"));
+        const container = document.querySelector(".inner-video");
 
-      // Get the number of visible cards based on screen size
-      function getVisibleCardsCount() {
-        if (window.matchMedia("(max-width: 550px)").matches) {
-          return 1;
-        } else if (window.matchMedia("(max-width: 850px)").matches) {
-          return 3;
-        } else {
-          return 5;
-        }
-      }
-
-      let visibleCards = getVisibleCardsCount();
-      let centerPosition = Math.floor(visibleCards / 2);
-      let activeIndex = 2;
-
-      // Initialize carousel
-      updateCarousel();
-
-      // Update on window resize
-      window.addEventListener("resize", function () {
-        const newVisibleCards = getVisibleCardsCount();
-        if (newVisibleCards !== visibleCards) {
-          visibleCards = newVisibleCards;
-          centerPosition = Math.floor(visibleCards / 2);
-          updateCarousel();
-        }
-      });
-
-      // Event listeners
-      prevBtn.addEventListener("click", () => navigate(-1));
-      nextBtn.addEventListener("click", () => navigate(1));
-      allCards.forEach((card) =>
-        card.addEventListener("click", handleCardClick)
-      );
-
-      function navigate(direction) {
-        // Pause any currently playing video
-        const activeVideo =
-          allCards[activeIndex].querySelector(".mobile-card-video");
-        if (activeVideo) {
-          activeVideo.pause();
+        // Get the number of visible cards based on screen size
+        function getVisibleCardsCount() {
+          if (window.matchMedia("(max-width: 550px)").matches) {
+            return 1;
+          } else if (window.matchMedia("(max-width: 850px)").matches) {
+            return 3;
+          } else {
+            return 5;
+          }
         }
 
-        activeIndex =
-          (activeIndex + direction + allCards.length) % allCards.length;
+        let visibleCards = getVisibleCardsCount();
+        let centerPosition = Math.floor(visibleCards / 2);
+        let activeIndex = 2;
+
+        // Initialize carousel
         updateCarousel();
-      }
 
-      function handleCardClick(e) {
-        if (e.currentTarget.classList.contains("inactive-card")) {
+        // Auto-play the initial active video
+        setTimeout(() => {
+          const initialActiveCard = allCards[activeIndex];
+          const video = initialActiveCard.querySelector(".mobile-card-video");
+          const playBtn = initialActiveCard.querySelector(".play-btn");
+          const pauseBtn = initialActiveCard.querySelector(".pause-btn");
+
+          if (video) {
+            video
+              .play()
+              .then(() => {
+                playBtn.classList.add("hidden");
+                pauseBtn.classList.remove("hidden");
+              })
+              .catch((error) => {
+                console.log("Initial autoplay prevented:", error);
+                playBtn.classList.remove("hidden");
+                pauseBtn.classList.add("hidden");
+              });
+          }
+        }, 400);
+
+        // Update on window resize
+        window.addEventListener("resize", function () {
+          const newVisibleCards = getVisibleCardsCount();
+          if (newVisibleCards !== visibleCards) {
+            visibleCards = newVisibleCards;
+            centerPosition = Math.floor(visibleCards / 2);
+            updateCarousel();
+          }
+        });
+
+        // Event listeners
+        prevBtn.addEventListener("click", () => navigate(-1));
+        nextBtn.addEventListener("click", () => navigate(1));
+        allCards.forEach((card) =>
+          card.addEventListener("click", handleCardClick)
+        );
+
+        function navigate(direction) {
           // Pause any currently playing video
           const activeVideo =
             allCards[activeIndex].querySelector(".mobile-card-video");
@@ -694,10 +680,11 @@
             activeVideo.pause();
           }
 
-          activeIndex = parseInt(e.currentTarget.dataset.index);
+          activeIndex =
+            (activeIndex + direction + allCards.length) % allCards.length;
           updateCarousel();
 
-          // Automatically play the video when card becomes active
+          // Automatically play the new active video after a short delay
           setTimeout(() => {
             const newActiveCard = allCards[activeIndex];
             const video = newActiveCard.querySelector(".mobile-card-video");
@@ -705,105 +692,151 @@
             const pauseBtn = newActiveCard.querySelector(".pause-btn");
 
             if (video) {
-              video.play();
-              playBtn.classList.add("hidden");
-              pauseBtn.classList.remove("hidden");
+              video
+                .play()
+                .then(() => {
+                  playBtn.classList.add("hidden");
+                  pauseBtn.classList.remove("hidden");
+                })
+                .catch((error) => {
+                  console.log("Autoplay prevented:", error);
+                  // Show play button if autoplay was prevented
+                  playBtn.classList.remove("hidden");
+                  pauseBtn.classList.add("hidden");
+                });
             }
-          }, 400); // Wait for animation to complete
-        } else if (e.currentTarget.classList.contains("active")) {
-          // Handle play/pause on active card
-          const video = e.currentTarget.querySelector(".mobile-card-video");
-          const playBtn = e.currentTarget.querySelector(".play-btn");
-          const pauseBtn = e.currentTarget.querySelector(".pause-btn");
-
-          if (video.paused) {
-            // Play video
-            video.play();
-            playBtn.classList.add("hidden");
-            pauseBtn.classList.remove("hidden");
-          } else {
-            // Pause video
-            video.pause();
-            playBtn.classList.remove("hidden");
-            pauseBtn.classList.add("hidden");
-          }
-        }
-      }
-
-      function updateCarousel() {
-        // Animate all currently visible cards out
-        allCards.forEach((card) => {
-          if (!card.classList.contains("hidden")) {
-            card.classList.remove("animate-in");
-            card.classList.add("animate-out");
-          }
-        });
-
-        // Force reflow to reset animation
-        void container.offsetWidth;
-
-        // Reset all cards
-        allCards.forEach((card) => {
-          card.classList.add("hidden");
-          card.classList.remove("active", "main-card");
-          card.classList.add("inactive-card");
-
-          // Hide all play/pause buttons
-          const playBtn = card.querySelector(".play-btn");
-          const pauseBtn = card.querySelector(".pause-btn");
-          if (playBtn) playBtn.classList.add("hidden");
-          if (pauseBtn) pauseBtn.classList.add("hidden");
-
-          // Pause all videos when changing cards
-          const video = card.querySelector(".mobile-card-video");
-          if (video) {
-            video.pause();
-            video.currentTime = 0;
-          }
-        });
-
-        // Determine which cards to show
-        const visibleIndices = [];
-        for (let i = -centerPosition; i <= centerPosition; i++) {
-          let index = (activeIndex + i + allCards.length) % allCards.length;
-          visibleIndices.push(index);
+          }, 400); // Match this delay with your animation duration
         }
 
-        // Animate in new visible cards
-        visibleIndices.forEach((index, position) => {
-          const card = allCards[index];
-          card.classList.remove("hidden", "animate-out");
-          card.classList.add("animate-in");
+        function handleCardClick(e) {
+          if (e.currentTarget.classList.contains("inactive-card")) {
+            // Pause any currently playing video
+            const activeVideo =
+              allCards[activeIndex].querySelector(".mobile-card-video");
+            if (activeVideo) {
+              activeVideo.pause();
+            }
 
-          if (position === centerPosition) {
-            card.classList.add("active", "main-card");
-            card.classList.remove("inactive-card");
+            activeIndex = parseInt(e.currentTarget.dataset.index);
+            updateCarousel();
 
-            // Show play button for active card
+            // Automatically play the video when card becomes active
+            setTimeout(() => {
+              const newActiveCard = allCards[activeIndex];
+              const video = newActiveCard.querySelector(".mobile-card-video");
+              const playBtn = newActiveCard.querySelector(".play-btn");
+              const pauseBtn = newActiveCard.querySelector(".pause-btn");
+
+              if (video) {
+                video
+                  .play()
+                  .then(() => {
+                    playBtn.classList.add("hidden");
+                    pauseBtn.classList.remove("hidden");
+                  })
+                  .catch((error) => {
+                    console.log("Autoplay prevented:", error);
+                    playBtn.classList.remove("hidden");
+                    pauseBtn.classList.add("hidden");
+                  });
+              }
+            }, 400); // Wait for animation to complete
+          } else if (e.currentTarget.classList.contains("active")) {
+            // Handle play/pause on active card
+            const video = e.currentTarget.querySelector(".mobile-card-video");
+            const playBtn = e.currentTarget.querySelector(".play-btn");
+            const pauseBtn = e.currentTarget.querySelector(".pause-btn");
+
+            if (video.paused) {
+              // Play video
+              video.play().then(() => {
+                playBtn.classList.add("hidden");
+                pauseBtn.classList.remove("hidden");
+              });
+            } else {
+              // Pause video
+              video.pause();
+              playBtn.classList.remove("hidden");
+              pauseBtn.classList.add("hidden");
+            }
+          }
+        }
+
+        function updateCarousel() {
+          // Animate all currently visible cards out
+          allCards.forEach((card) => {
+            if (!card.classList.contains("hidden")) {
+              card.classList.remove("animate-in");
+              card.classList.add("animate-out");
+            }
+          });
+
+          // Force reflow to reset animation
+          void container.offsetWidth;
+
+          // Reset all cards
+          allCards.forEach((card) => {
+            card.classList.add("hidden");
+            card.classList.remove("active", "main-card");
+            card.classList.add("inactive-card");
+
+            // Hide all play/pause buttons
             const playBtn = card.querySelector(".play-btn");
             const pauseBtn = card.querySelector(".pause-btn");
-            if (playBtn) playBtn.classList.remove("hidden");
+            if (playBtn) playBtn.classList.add("hidden");
             if (pauseBtn) pauseBtn.classList.add("hidden");
-          }
-        });
 
-        // Reorder DOM
-        const fragment = document.createDocumentFragment();
-        fragment.appendChild(prevBtn);
-        visibleIndices.forEach((index) =>
-          fragment.appendChild(allCards[index])
-        );
-        fragment.appendChild(nextBtn);
-        container.innerHTML = "";
-        container.appendChild(fragment);
-
-        // Remove animation classes after animation ends
-        allCards.forEach((card) => {
-          card.addEventListener("animationend", () => {
-            card.classList.remove("animate-in", "animate-out");
+            // Pause all videos when changing cards
+            const video = card.querySelector(".mobile-card-video");
+            if (video) {
+              video.pause();
+              video.currentTime = 0;
+            }
           });
-        });
-      }
-    });
-  </script>
+
+          // Determine which cards to show
+          const visibleIndices = [];
+          for (let i = -centerPosition; i <= centerPosition; i++) {
+            let index = (activeIndex + i + allCards.length) % allCards.length;
+            visibleIndices.push(index);
+          }
+
+          // Animate in new visible cards
+          visibleIndices.forEach((index, position) => {
+            const card = allCards[index];
+            card.classList.remove("hidden", "animate-out");
+            card.classList.add("animate-in");
+
+            if (position === centerPosition) {
+              card.classList.add("active", "main-card");
+              card.classList.remove("inactive-card");
+
+              // Show play button for active card
+              const playBtn = card.querySelector(".play-btn");
+              const pauseBtn = card.querySelector(".pause-btn");
+              if (playBtn) playBtn.classList.remove("hidden");
+              if (pauseBtn) pauseBtn.classList.add("hidden");
+            }
+          });
+
+          // Reorder DOM
+          const fragment = document.createDocumentFragment();
+          fragment.appendChild(prevBtn);
+          visibleIndices.forEach((index) =>
+            fragment.appendChild(allCards[index])
+          );
+          fragment.appendChild(nextBtn);
+          container.innerHTML = "";
+          container.appendChild(fragment);
+
+          // Remove animation classes after animation ends
+          allCards.forEach((card) => {
+            card.addEventListener("animationend", () => {
+              card.classList.remove("animate-in", "animate-out");
+            });
+          });
+        }
+      });
+    </script>
+  </body>
 </html>
