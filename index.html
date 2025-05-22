@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mitmfilm</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <style>
       .video-main {
         display: flex;
         justify-content: center;
+        margin-top: 100px;
       }
       .container {
         width: 95%;
@@ -40,6 +40,15 @@
         }
       }
 
+      .mobile-card:nth-child(2),
+      .mobile-card:nth-child(6) {
+        top: -30px;
+      }
+      .mobile-card:nth-child(3),
+      .mobile-card:nth-child(5) {
+        bottom: -30px;
+      }
+
       .mobile-card-video {
         width: 94%;
         height: 100%;
@@ -51,7 +60,7 @@
       }
 
       .mobile-card.inactive-card {
-        opacity: 0.7;
+        opacity: 1;
         transform: scale(0.9);
       }
       .mobile-card.active {
@@ -130,6 +139,14 @@
         .pause-btn svg {
           width: 80px;
           height: 80px;
+        }
+        .mobile-card:nth-child(2),
+        .mobile-card:nth-child(6) {
+          top: unset;
+        }
+        .mobile-card:nth-child(3),
+        .mobile-card:nth-child(5) {
+          bottom: unset;
         }
       }
 
